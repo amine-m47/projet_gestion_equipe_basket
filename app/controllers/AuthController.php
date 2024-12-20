@@ -4,7 +4,7 @@ class AuthController {
     private $userModel;
 
     public function __construct() {
-        $this->userModel = new User();
+        $this->userModel = new Utilisateur();
     }
 
     public function login($username, $password) {
