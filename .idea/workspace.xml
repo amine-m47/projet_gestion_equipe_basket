@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d769dcd7-8e1a-40a6-a3f7-4899fca3113e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/autoload.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/JoueurController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/joueur_lib.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/Joueur.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/logout.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/joueurs/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Joueur.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Match.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Note_personnelle.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Participer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Utilisateur.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,18 +28,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\BUT\s3\projet_gestion_equipe_basket" />
@@ -77,6 +65,8 @@
       <workItem from="1732888321396" duration="1373000" />
       <workItem from="1733843348484" duration="7000" />
       <workItem from="1734085160426" duration="7541000" />
+      <workItem from="1734645272956" duration="19000" />
+      <workItem from="1734682336873" duration="35000" />
     </task>
     <servers />
   </component>
