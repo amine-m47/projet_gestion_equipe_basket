@@ -1,0 +1,9 @@
+<!doctype html>
+
+<form method="POST" action="/login">
+    <label for="username">Nom d'utilisateur :</label>
+    <input type="text" name="username" required>
+    <label for="password">Mot de passe :</label>
+    <input type="password" name="password" required>
+    <button type="submit">Se connecter</button>
+</form>
