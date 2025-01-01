@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/../layout/header.php'; ?>
 <h1>Ajouter un joueur</h1>
-<form method="POST" action="/controllers/index.php?method=store">
+<form method="POST" action="/projet_gestion_equipe_basket/controllers/JoueurController.php?method=store">
     <input type="text" name="numero_licence_joueur" placeholder="Numéro de Licence" required>
     <input type="text" name="nom" placeholder="Nom" required>
     <input type="text" name="prenom" placeholder="Prénom" required>

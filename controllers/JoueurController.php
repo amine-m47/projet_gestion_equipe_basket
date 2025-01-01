@@ -5,32 +5,25 @@ require_once __DIR__ . '/../lib/joueur_lib.php'; // Fonction pour ajouter un jou
 class JoueurController {
     private $pdo;
 
-    // Constructeur pour initialiser la connexion PDO
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
-    // Afficher la liste des joueurs
+    // Méthode pour afficher la liste des joueurs
     public function index() {
-        // Récupère les joueurs depuis la base de données
         $joueurs = getAllJoueurs($this->pdo);
-
-        // Inclut la vue index.php et passe les données
         require __DIR__ . '/../views/joueurs/index.php';
     }
 
-    // Afficher le formulaire pour ajouter un joueur
+    // Méthode pour afficher le formulaire d'ajout de joueur
     public function create() {
-        // Affiche le formulaire pour ajouter un joueur
         require __DIR__ . '/../views/joueurs/create.php';
     }
 
-    // Ajouter un joueur
+    // Méthode pour traiter l'ajout de joueur (via le formulaire)
     public function store() {
-        // Vérifie si le formulaire a été soumis avec toutes les données nécessaires
-        if (isset($_POST['numero_licence_joueur'], $_POST['nom'], $_POST['prenom'], $_POST['date_naissance'], $_POST['taille'], $_POST['poids'], $_POST['statut'])) {
-
-            // Récupère les données du formulaire
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Récupérer les données du formulaire
             $data = [
                 'numero' => $_POST['numero_licence_joueur'],
                 'nom' => $_POST['nom'],
@@ -41,15 +34,13 @@ class JoueurController {
                 'statut' => $_POST['statut']
             ];
 
-            // Appelle la fonction pour ajouter un joueur dans la base de données
+            // Appeler la fonction pour ajouter un joueur
             createJoueur($this->pdo, $data);
 
-            // Redirige vers la liste des joueurs après l'ajout
-            header("Location: /public/joueurs/index.php");
-            exit();
-        } else {
-            // Si une donnée est manquante, afficher un message d'erreur
-            echo "Tous les champs sont obligatoires.";
+            // Redirection après ajout
+            header('Location: /../views/joueurs/index.php');  // Redirige vers la liste des joueurs
+            exit;
         }
     }
 }
+?>
