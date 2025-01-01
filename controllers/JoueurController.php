@@ -15,15 +15,9 @@ class JoueurController {
         require __DIR__ . '/../views/joueurs/index.php';
     }
 
-    // Méthode pour afficher le formulaire d'ajout de joueur
-    public function create() {
-        require __DIR__ . '/../views/joueurs/create.php';
-    }
-
-    // Méthode pour traiter l'ajout de joueur (via le formulaire)
+    // Méthode pour ajouter un joueur
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer les données du formulaire
             $data = [
                 'numero' => $_POST['numero_licence_joueur'],
                 'nom' => $_POST['nom'],
@@ -34,13 +28,12 @@ class JoueurController {
                 'statut' => $_POST['statut']
             ];
 
-            // Appeler la fonction pour ajouter un joueur
+            // Ajouter le joueur dans la base de données
             createJoueur($this->pdo, $data);
 
-            // Redirection après ajout
-            header('Location: /../views/joueurs/index.php');  // Redirige vers la liste des joueurs
+            // Rediriger vers la liste des joueurs après ajout
+            header('Location: index.php');
             exit;
         }
-    }
-}
+    }}
 ?>
