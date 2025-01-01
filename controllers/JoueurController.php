@@ -9,31 +9,75 @@ class JoueurController {
         $this->pdo = $pdo;
     }
 
-    // Méthode pour afficher la liste des joueurs
-    public function index() {
-        $joueurs = getAllJoueurs($this->pdo);
-        require __DIR__ . '/../views/joueurs/index.php';
+    public function handleRequest() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['action']) && $_POST['action'] === 'delete') {
+                $this->delete(); // Appeler la méthode delete
+            } elseif (isset($_POST['action']) && $_POST['action'] === 'store') {
+                $this->store(); // Ajouter un joueur
+            } elseif (isset($_POST['action']) && $_POST['action'] === 'update') {
+                $this->update(); // Mettre à jour un joueur
+            }
+        } else {
+            // Par défaut, afficher la liste des joueurs
+            $this->index();
+        }
     }
 
-    // Méthode pour ajouter un joueur
+    // Méthode pour afficher la liste des joueurs
+    public function index() {
+        return getAllJoueurs($this->pdo);
+    }
+
+    public function show($id_joueur) {
+        return getJoueurById($this->pdo, $id_joueur);
+    }
+
+    // Ajouter un nouveau joueur
     public function store() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = [
+            'numero_licence_joueur' => $_POST['numero_licence_joueur'],
+            'nom' => $_POST['nom'],
+            'prenom' => $_POST['prenom'],
+            'date_naissance' => $_POST['date_naissance'],
+            'taille' => $_POST['taille'],
+            'poids' => $_POST['poids'],
+            'statut' => $_POST['statut'],
+        ];
+
+        createJoueur($this->pdo, $data); // Appeler la fonction pour insérer le joueur
+        header("Location: index.php"); // Rediriger après l'ajout
+        exit();
+    }
+
+    // Mettre à jour un joueur
+    public function update() {
+        if (isset($_POST['id_joueur'])) {
+            $id_joueur = $_POST['id_joueur'];
             $data = [
-                'numero' => $_POST['numero_licence_joueur'],
+                'numero_licence_joueur' => $_POST['numero_licence_joueur'],
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
                 'date_naissance' => $_POST['date_naissance'],
                 'taille' => $_POST['taille'],
                 'poids' => $_POST['poids'],
-                'statut' => $_POST['statut']
+                'statut' => $_POST['statut'],
             ];
 
-            // Ajouter le joueur dans la base de données
-            createJoueur($this->pdo, $data);
-
-            // Rediriger vers la liste des joueurs après ajout
-            header('Location: index.php');
-            exit;
-        }
+            updateJoueur($this->pdo, $data, $id_joueur); // Appeler la fonction pour mettre à jour le joueur
+            header("Location: index.php"); // Rediriger après la mise à jour
+            exit();
     }}
+
+    // Supprimer un joueur
+    public function delete() {
+        if (isset($_POST['id_joueur'])) {
+            $id_joueur = $_POST['id_joueur'];
+            deleteJoueur($this->pdo, $id_joueur); // Appeler la fonction de suppression
+            header("Location: index.php"); // Rediriger vers la page de la liste des joueurs
+            exit(); // Toujours appeler exit() après une redirection pour s'assurer que le script s'arrête
+        }
+    }
+
+}
 ?>

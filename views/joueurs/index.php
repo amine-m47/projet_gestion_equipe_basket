@@ -1,23 +1,28 @@
 <?php
 require_once __DIR__ . '/../layout/header.php';
-// Inclure le fichier contenant la connexion à la base de données
-require_once __DIR__ . '/../../config/database.php'; // Chemin correct selon ton projet
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../lib/joueur_lib.php';
+require_once __DIR__ . '/../../controllers/JoueurController.php';
 
-// Inclure le fichier contenant la fonction getAllJoueurs
-require_once __DIR__ . '/../../lib/joueur_lib.php'; // Assure-toi que le chemin est correct
-
-// Appeler la fonction pour récupérer les joueurs
+// Récupération des joueurs via la fonction getAllJoueurs
+$controller = new JoueurController($pdo);
 $joueurs = getAllJoueurs($pdo);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_joueur = $_POST['id_joueur'];
+        $controller->delete();
+}
 ?>
+
 <h1>Liste des joueurs</h1>
 <a href="create.php">Ajouter un joueur</a>
+
 <?php if (empty($joueurs)): ?>
     <p>Aucun joueur trouvé.</p>
 <?php else: ?>
     <table>
         <thead>
         <tr>
-            <th>ID</th>
             <th>Nom</th>
             <th>Prénom</th>
             <th>Numéro de Licence</th>
@@ -25,12 +30,12 @@ $joueurs = getAllJoueurs($pdo);
             <th>Taille</th>
             <th>Poids</th>
             <th>Statut</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($joueurs as $joueur): ?>
             <tr>
-                <td><?= htmlspecialchars($joueur['id_joueur']) ?></td>
                 <td><?= htmlspecialchars($joueur['nom']) ?></td>
                 <td><?= htmlspecialchars($joueur['prenom']) ?></td>
                 <td><?= htmlspecialchars($joueur['numero_licence_joueur']) ?></td>
@@ -38,6 +43,16 @@ $joueurs = getAllJoueurs($pdo);
                 <td><?= htmlspecialchars($joueur['taille']) ?></td>
                 <td><?= htmlspecialchars($joueur['poids']) ?></td>
                 <td><?= htmlspecialchars($joueur['statut']) ?></td>
+                <td>
+                    <!-- Lien pour modifier -->
+                    <a href="edit.php?id=<?= $joueur['id_joueur'] ?>">Modifier</a>
+                    <!-- Formulaire pour supprimer -->
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="id_joueur" value="<?= $joueur['id_joueur'] ?>">
+                        <input type="hidden" name="method" value="delete">
+                        <button type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">Supprimer</button>
+                    </form>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
