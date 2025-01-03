@@ -35,7 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="statut">Statut :</label>
     <select id="statut" name="statut">
         <option value="Actif">Actif</option>
-        <option value="Inactif">Inactif</option>
+        <option value="Inactif">Blessé</option>
+        <option value="Inactif">Suspendu</option>
+        <option value="Inactif">Absent</option>
     </select><br>
 
     <button type="submit">Ajouter</button>

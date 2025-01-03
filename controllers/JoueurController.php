@@ -53,8 +53,8 @@ class JoueurController {
     // Mettre à jour un joueur
     public function update() {
         if (isset($_POST['id_joueur'])) {
-            $id_joueur = $_POST['id_joueur'];
             $data = [
+                'id_joueur' => $_POST['id_joueur'],
                 'numero_licence_joueur' => $_POST['numero_licence_joueur'],
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
@@ -64,7 +64,7 @@ class JoueurController {
                 'statut' => $_POST['statut'],
             ];
 
-            updateJoueur($this->pdo, $data, $id_joueur); // Appeler la fonction pour mettre à jour le joueur
+            updateJoueur($this->pdo, $data); // Appeler la fonction pour mettre à jour le joueur
             header("Location: index.php"); // Rediriger après la mise à jour
             exit();
     }}

@@ -1,17 +1,53 @@
-<?php require_once __DIR__ . '/../layout/header.php'; ?>
-<h1>Modifier un match</h1>
-<form method="POST" action="../../controllers/MatchController.php?action=update">
-    <input type="hidden" name="id_match" value="<?= htmlspecialchars($match['id_match']) ?>">
-    <input type="datetime-local" name="date_heure" value="<?= htmlspecialchars($match['date_heure']) ?>" required>
-    <input type="text" name="lieu_rencontre" value="<?= htmlspecialchars($match['lieu_rencontre']) ?>" required>
-    <select name="domicile_ou_exterieur">
-        <option value="Domicile" <?= $match['domicile_ou_exterieur'] === 'Domicile' ? 'selected' : '' ?>>Domicile</option>
-        <option value="Exterieur" <?= $match['domicile_ou_exterieur'] === 'Exterieur' ? 'selected' : '' ?>>Extérieur</option>
-    </select>
-    <input type="text" name="resultat" value="<?= htmlspecialchars($match['resultat']) ?>" required>
-    <select name="equipe_adverse">
-        <option value="1" <?= $match['equipe_adverse'] ? 'selected' : '' ?>>Oui</option>
-        <option value="0" <?= !$match['equipe_adverse'] ? 'selected' : '' ?>>Non</option>
-    </select>
-    <button type="submit">Modifier</button>
+<?php
+require_once __DIR__ . '/../layout/header.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../controllers/MatchController.php';
+require_once __DIR__ . '/../../lib/match_lib.php';
+
+// Initialisation du contrôleur
+$controller = new MatchController($pdo);
+
+// Vérifier si l'ID du match est fourni dans l'URL
+if (isset($_GET['id'])) {
+    $id_match = $_GET['id'];
+
+    // Récupérer les informations du match à modifier
+    $match = $controller->show($id_match);
+
+    // Si le formulaire est soumis, appeler la méthode update()
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller->update();
+        exit; // Stopper l'exécution après redirection
+    }
+} else {
+    // Si l'ID n'est pas présent, rediriger ou afficher une erreur
+    echo "Match introuvable.";
+    exit;
+}
+?>
+
+<h1>Modifier le match</h1>
+
+<form method="POST">
+    <input type="hidden" name="id_match" value="<?= $id_match ?>">
+
+    <label for="date_heure">Date et Heure :</label>
+    <input type="datetime-local" id="date_heure" name="date_heure" value="<?= $match['date_heure'] ?>" required><br>
+
+    <label for="lieu_rencontre">Lieu de Rencontre :</label>
+    <input type="text" id="lieu_rencontre" name="lieu_rencontre" value="<?= $match['lieu_rencontre'] ?>"><br>
+
+    <label for="domicile">Domicile :</label>
+    <input type="checkbox" id="domicile" name="domicile" <?= $match['domicile'] ? 'checked' : '' ?>><br>
+
+    <label for="resultat">Résultat (victoire ou défaite) :</label>
+    <input type="radio" id="victoire" name="resultat" value="1" <?= $match['resultat'] ? 'checked' : '' ?> required> Victoire
+    <input type="radio" id="defaite" name="resultat" value="0" <?= !$match['resultat'] ? 'checked' : '' ?> required> Défaite<br>
+
+    <label for="equipe_adverse">Équipe Adverse :</label>
+    <input type="text" id="equipe_adverse" name="equipe_adverse" value="<?= $match['equipe_adverse'] ?>" required><br>
+
+    <button type="submit">Mettre à jour</button>
 </form>
+
+<?php require_once __DIR__ . '/../layout/footer.php'; ?>

@@ -24,7 +24,7 @@ function createJoueur($pdo, $data) {
 }
 
 // Mettre à jour un joueur existant
-function updateJoueur($pdo, $data, $id_joueur) {
+function updateJoueur($pdo, $data) {
     $stmt = $pdo->prepare('
         UPDATE Joueur
         SET numero_licence_joueur = :numero_licence_joueur,
@@ -36,7 +36,6 @@ function updateJoueur($pdo, $data, $id_joueur) {
             statut = :statut
         WHERE id_joueur = :id_joueur
     ');
-    $data['id_joueur'] = $id_joueur;
     $stmt->execute($data);
 }
 

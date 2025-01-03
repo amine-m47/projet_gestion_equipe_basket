@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../controllers/JoueurController.php';
 
 // Récupération des joueurs via la fonction getAllJoueurs
 $controller = new JoueurController($pdo);
-$joueurs = getAllJoueurs($pdo);
+$joueurs = $controller->index();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_joueur = $_POST['id_joueur'];
