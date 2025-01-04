@@ -8,7 +8,12 @@ require_once __DIR__ . '/../../controllers/MatchController.php';
 $controller = new MatchController($pdo);
 
 // Récupération des matchs via la fonction du contrôleur
-$matchs = getAllMatchs($pdo);
+$matchs = $controller->index();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_match = $_POST['id_match'];
+    $controller->delete();
+}
 ?>
 
 <h1>Liste des matchs</h1>
@@ -47,7 +52,7 @@ $matchs = getAllMatchs($pdo);
 
                     <!-- Formulaire pour suppression -->
                     <form method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $match['id_match'] ?>">
+                        <input type="hidden" name="id_match" value="<?= $match['id_match'] ?>">
                         <input type="hidden" name="method" value="delete">
                         <button type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce match ?')">Supprimer</button>
                     </form>

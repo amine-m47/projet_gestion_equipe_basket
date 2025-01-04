@@ -29,5 +29,12 @@ function getMatchById($pdo, $id_match) {
     return $stmt->fetch(PDO::FETCH_ASSOC); // Retourne un tableau associatif du match
 }
 
+// Supprimer un match
+function deleteMatch($pdo, $id_match) {
+    $stmt = $pdo->prepare('DELETE FROM `Match` WHERE id_match = :id_match');
+    $stmt->bindParam(':id_match', $id_match, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
 
 ?>
