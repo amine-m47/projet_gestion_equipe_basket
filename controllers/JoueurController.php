@@ -9,24 +9,17 @@ class JoueurController {
         $this->pdo = $pdo;
     }
 
-    public function handleRequest() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['action']) && $_POST['action'] === 'delete') {
-                $this->delete(); // Appeler la méthode delete
-            } elseif (isset($_POST['action']) && $_POST['action'] === 'store') {
-                $this->store(); // Ajouter un joueur
-            } elseif (isset($_POST['action']) && $_POST['action'] === 'update') {
-                $this->update(); // Mettre à jour un joueur
-            }
-        } else {
-            // Par défaut, afficher la liste des joueurs
-            $this->index();
-        }
-    }
-
     // Méthode pour afficher la liste des joueurs
     public function index() {
         return getAllJoueurs($this->pdo);
+    }
+
+    // Afficher les détails d'un joueur ainsi que ses notes
+    public function showCommentaires($id_joueur) {
+        // Récupérer les informations du joueur et ses notes
+        $joueur = getJoueurById($this->pdo, $id_joueur); // Vous devrez définir cette fonction pour récupérer les infos du joueur
+        $notes = getNotesJoueur($this->pdo, $id_joueur); // Récupérer les notes du joueur
+        return ['joueur' => $joueur, 'notes' => $notes];
     }
 
     public function show($id_joueur) {

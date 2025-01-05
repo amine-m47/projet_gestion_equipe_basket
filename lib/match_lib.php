@@ -9,7 +9,15 @@ function getAllMatchs($pdo) {
 function createMatch($pdo, $data) {
     $stmt = $pdo->prepare('
         INSERT INTO `Match` (date_heure, lieu_rencontre, domicile, resultat, equipe_adverse)
-        VALUES (:date_heure, :lieu, :domicile, :resultat, :equipe)
+        VALUES (:date_heure, :lieu_rencontre, :domicile, :resultat, :equipe_adverse)
+    ');
+    $stmt->execute($data);
+}
+
+function createMatchNull($pdo, $data) {
+    $stmt = $pdo->prepare('
+        INSERT INTO `Match` (date_heure, lieu_rencontre, domicile, resultat, equipe_adverse)
+        VALUES (:date_heure, :lieu_rencontre, :domicile, null, :equipe_adverse)
     ');
     $stmt->execute($data);
 }
@@ -17,7 +25,7 @@ function createMatch($pdo, $data) {
 function updateMatch($pdo, $data) {
     $stmt = $pdo->prepare('
         UPDATE `Match`
-        SET date_heure = :date_heure, lieu_rencontre = :lieu_rencontre, domicile = :domicile, resultat = :resultat, equipe_adverse = :equipe_adverse
+        SET date_heure = :date_heure, lieu_rencontre = :lieu_rencontre, domicile = :domicile, resultat = null, equipe_adverse = :equipe_adverse
         WHERE id_match = :id_match
     ');
     $stmt->execute($data);
@@ -34,6 +42,16 @@ function deleteMatch($pdo, $id_match) {
     $stmt = $pdo->prepare('DELETE FROM `Match` WHERE id_match = :id_match');
     $stmt->bindParam(':id_match', $id_match, PDO::PARAM_INT);
     $stmt->execute();
+}
+
+// match_lib.php
+
+function updateMatchResult($pdo, $id_match, $resultat) {
+    $stmt = $pdo->prepare("UPDATE `Match` SET resultat = :resultat WHERE id_match = :id_match");
+    return $stmt->execute([
+        ':resultat' => $resultat,
+        ':id_match' => $id_match,
+    ]);
 }
 
 

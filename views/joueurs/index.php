@@ -8,9 +8,13 @@ require_once __DIR__ . '/../../controllers/JoueurController.php';
 $controller = new JoueurController($pdo);
 $joueurs = $controller->index();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id_joueur = $_POST['id_joueur'];
-        $controller->delete();
+// Vérifie si le formulaire soumis est celui pour supprimer un match
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['method'] === 'delete') {
+    if (isset($_POST['id_joueur'])) {
+        $controller->delete(); // Appeler la méthode du contrôleur pour supprimer
+        header("Location: index.php"); // Rediriger après suppression
+        exit();
+    }
 }
 ?>
 
@@ -44,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td><?= htmlspecialchars($joueur['poids']) ?></td>
                 <td><?= htmlspecialchars($joueur['statut']) ?></td>
                 <td>
+                    <a href="choix.php?id=<?= $joueur['id_joueur'] ?>">Détails</a> <!-- Bouton "Détails" -->
+
                     <!-- Lien pour modifier -->
                     <a href="edit.php?id=<?= $joueur['id_joueur'] ?>">Modifier</a>
                     <!-- Formulaire pour supprimer -->

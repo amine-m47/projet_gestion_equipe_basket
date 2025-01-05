@@ -9,21 +9,6 @@ class MatchController {
         $this->pdo = $pdo;
     }
 
-    public function handleRequest() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['action']) && $_POST['action'] === 'delete') {
-                $this->delete(); // Appeler la méthode delete
-            } elseif (isset($_POST['action']) && $_POST['action'] === 'store') {
-                $this->store(); // Ajouter un match
-            } elseif (isset($_POST['action']) && $_POST['action'] === 'update') {
-                $this->update(); // Mettre à jour un match
-            }
-        } else {
-            // Par défaut, afficher la liste des matchs
-            $this->index();
-        }
-    }
-
     // Méthode pour afficher la liste des matchs
     public function index() {
         return getAllMatchs($this->pdo); // Récupérer tous les matchs
@@ -40,11 +25,10 @@ class MatchController {
             'date_heure' => $_POST['date_heure'],
             'lieu_rencontre' => $_POST['lieu_rencontre'],
             'domicile' => isset($_POST['domicile']) ? 1 : 0, // Si la case domicile est cochée, domicile = 1, sinon 0
-            'resultat' => $_POST['resultat'], // Résultat du match : victoire (1) ou défaite (0)
             'equipe_adverse' => $_POST['equipe_adverse'],
         ];
 
-        createMatch($this->pdo, $data); // Appeler la fonction pour insérer le match
+        createMatchNull($this->pdo, $data); // Appeler la fonction pour insérer le match
         header("Location: index.php"); // Rediriger après l'ajout
         exit();
     }
@@ -57,10 +41,8 @@ class MatchController {
                 'date_heure' => $_POST['date_heure'],
                 'lieu_rencontre' => $_POST['lieu_rencontre'],
                 'domicile' => isset($_POST['domicile']) ? 1 : 0, // Si la case domicile est cochée, domicile = 1, sinon 0
-                'resultat' => $_POST['resultat'], // Résultat du match : victoire (1) ou défaite (0)
                 'equipe_adverse' => $_POST['equipe_adverse'],
             ];
-            echo 'ok';
             updateMatch($this->pdo, $data); // Appeler la fonction pour mettre à jour le match
             header("Location: index.php"); // Rediriger après la mise à jour
             exit();
@@ -76,6 +58,10 @@ class MatchController {
             header("Location: index.php"); // Rediriger vers la page de la liste des matchs
             exit(); // Toujours appeler exit() après une redirection pour s'assurer que le script s'arrête
         }
+    }
+
+    public function updateResult($id_match, $resultat) {
+        return updateMatchResult($this->pdo, $id_match, $resultat);
     }
 }
 ?>

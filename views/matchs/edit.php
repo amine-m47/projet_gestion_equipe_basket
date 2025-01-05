@@ -40,10 +40,6 @@ if (isset($_GET['id'])) {
     <label for="domicile">Domicile :</label>
     <input type="checkbox" id="domicile" name="domicile" <?= $match['domicile'] ? 'checked' : '' ?>><br>
 
-    <label for="resultat">Résultat (victoire ou défaite) :</label>
-    <input type="radio" id="victoire" name="resultat" value="1" <?= $match['resultat'] ? 'checked' : '' ?> required> Victoire
-    <input type="radio" id="defaite" name="resultat" value="0" <?= !$match['resultat'] ? 'checked' : '' ?> required> Défaite<br>
-
     <label for="equipe_adverse">Équipe Adverse :</label>
     <input type="text" id="equipe_adverse" name="equipe_adverse" value="<?= $match['equipe_adverse'] ?>" required><br>
 

@@ -46,3 +46,4 @@ function deleteJoueur($pdo, $id_joueur) {
     $stmt->execute();
 }
 
+

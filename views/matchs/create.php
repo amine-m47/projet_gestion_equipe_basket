@@ -16,21 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>Ajouter un match</h1>
 
 <form method="POST">
+    <!-- Date et heure -->
     <label for="date_heure">Date et Heure :</label>
     <input type="datetime-local" id="date_heure" name="date_heure" required><br>
 
-    <label for="lieu_rencontre">Lieu de Rencontre :</label>
-    <input type="text" id="lieu_rencontre" name="lieu_rencontre"><br>
+    <!-- Équipe adverse -->
+    <label for="equipe_adverse">Équipe Adverse :</label>
+    <input type="text" id="equipe_adverse" name="equipe_adverse" required><br>
 
+    <!-- Domicile -->
     <label for="domicile">Domicile :</label>
     <input type="checkbox" id="domicile" name="domicile"><br>
 
-    <label for="resultat">Résultat (victoire ou défaite) :</label>
-    <input type="radio" id="victoire" name="resultat" value="1" required> Victoire
-    <input type="radio" id="defaite" name="resultat" value="0" required> Défaite<br>
-
-    <label for="equipe_adverse">Équipe Adverse :</label>
-    <input type="text" id="equipe_adverse" name="equipe_adverse" required><br>
+    <!-- Lieu de rencontre -->
+    <label for="lieu_rencontre">Lieu de Rencontre :</label>
+    <input type="text" id="lieu_rencontre" name="lieu_rencontre"><br>
 
     <button type="submit">Ajouter</button>
 </form>
