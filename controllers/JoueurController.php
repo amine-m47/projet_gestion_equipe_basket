@@ -14,14 +14,6 @@ class JoueurController {
         return getAllJoueurs($this->pdo);
     }
 
-    // Afficher les détails d'un joueur ainsi que ses notes
-    public function showCommentaires($id_joueur) {
-        // Récupérer les informations du joueur et ses notes
-        $joueur = getJoueurById($this->pdo, $id_joueur); // Vous devrez définir cette fonction pour récupérer les infos du joueur
-        $notes = getNotesJoueur($this->pdo, $id_joueur); // Récupérer les notes du joueur
-        return ['joueur' => $joueur, 'notes' => $notes];
-    }
-
     public function show($id_joueur) {
         return getJoueurById($this->pdo, $id_joueur);
     }

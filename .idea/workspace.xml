@@ -5,20 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d769dcd7-8e1a-40a6-a3f7-4899fca3113e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/NoteController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/note_personnelle_lib.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/joueurs/choix.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/joueurs/show.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/matchs/add_result.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/JoueurController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/JoueurController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/MatchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/MatchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/joueur_lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/joueur_lib.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/match_lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/match_lib.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/joueurs/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/joueurs/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/matchs/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/matchs/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/matchs/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/joueurs/choix.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/joueurs/choix.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/joueurs/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/joueurs/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/joueurs/show.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -11,7 +11,7 @@ $noteController = new NoteController($pdo);
 // Récupérer l'id du joueur à partir de l'URL
 $id_joueur = $_GET['id'] ?? null;
 
-if (!$id_joueur) {
+if (!$id_joueur){
     header("Location: index.php");
     exit;
 }
@@ -22,6 +22,7 @@ $joueurData = $joueurController->show($id_joueur);
 // Si le formulaire de modification du joueur est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
     // Modifier les informations du joueur
+    $id_joueur = $_POST['id_joueur'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $numero_licence_joueur = $_POST['numero_licence_joueur'];
@@ -70,6 +71,8 @@ $notes = $noteController->getNotes($id_joueur);
 <?php if ($joueurData): ?>
     <!-- Formulaire pour modifier les détails du joueur -->
     <form method="POST">
+        <input type="hidden" name="method" value="edit">
+
         <input type="hidden" name="id_joueur" value="<?= $id_joueur ?>">
 
         <label for="numero_licence_joueur">Numéro de Licence :</label>
@@ -92,8 +95,10 @@ $notes = $noteController->getNotes($id_joueur);
 
         <label for="statut">Statut :</label>
         <select id="statut" name="statut">
-            <option value="Actif" <?= $joueurData['statut'] === 'Actif' ? 'selected' : '' ?>>Actif</option>
-            <option value="Inactif" <?= $joueurData['statut'] === 'Inactif' ? 'selected' : '' ?>>Inactif</option>
+=           <option value="Actif"<?= $joueurData['statut'] === 'Actif' ? 'selected' : '' ?>> Actif</option>
+            <option value="Blessé" <?= $joueurData['statut'] === 'Blessé' ? 'selected' : '' ?>>Blessé</option>
+            <option value="Suspendu" <?= $joueurData['statut'] === 'Suspendu' ? 'selected' : '' ?>>Suspendu</option>
+            <option value="Absent" <?= $joueurData['statut'] === 'Absent' ? 'selected' : '' ?>>Absent</option>
         </select><br>
 
         <button type="submit">Mettre à jour</button>
@@ -104,6 +109,7 @@ $notes = $noteController->getNotes($id_joueur);
 
 <!-- Formulaire pour supprimer le joueur -->
 <form method="POST">
+    <input type="hidden" name="method" value="delete">
     <input type="hidden" name="id_joueur" value="<?= $id_joueur ?>">
     <button type="submit" name="supprimer_joueur" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">Supprimer</button>
 </form>
