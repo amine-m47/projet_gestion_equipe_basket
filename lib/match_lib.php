@@ -54,5 +54,11 @@ function updateMatchResult($pdo, $id_match, $resultat) {
     ]);
 }
 
+// Récupérer tous les matchs à venir (non joués)
+function getMatchsAVenir($pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM Matchs WHERE resultat IS NULL ORDER BY date_heure ASC');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 ?>

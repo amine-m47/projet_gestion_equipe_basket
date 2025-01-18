@@ -46,4 +46,14 @@ function deleteJoueur($pdo, $id_joueur) {
     $stmt->execute();
 }
 
-
+// Fonction pour vérifier si le joueur existe
+function joueurExiste($pdo, $id_joueur) {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM Joueur WHERE id_joueur = ?");
+    $stmt->execute([$id_joueur]);
+    return $stmt->fetchColumn() > 0;
+}
+function getJoueursActifs($pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM Joueur WHERE statut = "actif"');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

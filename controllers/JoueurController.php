@@ -14,7 +14,15 @@ class JoueurController {
         return getAllJoueurs($this->pdo);
     }
 
+    // Méthode pour afficher un joueur
     public function show($id_joueur) {
+        // Vérifier si le joueur existe via la librairie
+        if (!joueurExiste($this->pdo, $id_joueur)) {
+            header("Location: index.php"); // Rediriger si le joueur n'existe pas
+            exit();
+        }
+
+        // Récupérer les informations du joueur
         return getJoueurById($this->pdo, $id_joueur);
     }
 
@@ -62,6 +70,9 @@ class JoueurController {
             header("Location: index.php"); // Rediriger vers la page de la liste des joueurs
             exit(); // Toujours appeler exit() après une redirection pour s'assurer que le script s'arrête
         }
+    }
+    public function getJoueursActifs() {
+        return getJoueursActifs($this->pdo);
     }
 
 }

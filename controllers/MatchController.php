@@ -63,5 +63,9 @@ class MatchController {
     public function updateResult($id_match, $resultat) {
         return updateMatchResult($this->pdo, $id_match, $resultat);
     }
+
+    public function getMatchsAVenir() {
+        return getMatchsAVenir($this->pdo);
+    }
 }
 ?>

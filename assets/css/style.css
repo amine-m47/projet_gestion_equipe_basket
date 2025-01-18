@@ -29,10 +29,11 @@ header nav a:hover {
 
 main {
     padding: 2rem;
-    background: #fff;
+    background: #f9f9f9;
     margin: 2rem auto;
     max-width: 800px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px
 }
 
 footer {
