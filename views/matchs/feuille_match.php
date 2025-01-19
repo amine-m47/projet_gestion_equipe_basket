@@ -116,16 +116,162 @@ foreach ($postes as $numPoste => $nomPoste) {
 }
 
 ?>
+<style>
+    /* Style général */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fb;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
 
-<h1>Feuille de match</h1>
-<p>Match ID : <?= htmlspecialchars($id_match) ?></p>
+    h1 {
+        text-align: center;
+        color: #007bff;
+        font-size: 36px;
+        margin-top: 5px;
+    }
 
-<h2>Postes et sélection des joueurs (validation individuelle)</h2>
+    h2 {
+        color: #333;
+        font-size: 24px;
+        text-align: center;
+        margin-top: 5px;
+    }
 
-<?php
-// Si un poste titulaire manque, afficher un message d'avertissement
-if (!empty($postesTitulairesManquants)): ?>
-    <div style="color: red; font-weight: bold;">
+    .match-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 5px;
+    }
+
+    .player-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .player-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .player-card h3 {
+        margin: 0;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .player-card p {
+        margin: 10px 0;
+        color: #555;
+    }
+
+    .player-actions {
+        margin-top: 15px;
+    }
+
+    .player-actions .btn {
+        margin-right: 10px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-info {
+        background-color: #28a745;
+    }
+
+    .btn-info:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .add-player-btn a {
+        padding: 12px 30px;
+        background-color: #28a745;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .add-player-btn a:hover {
+        background-color: #218838;
+    }
+
+    .form-container {
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    .form-container button {
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .form-container button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<h1>Feuille de Match</h1>
+
+<h2>Postes et sélection des Joueurs</h2>
+
+<?php if (!empty($postesTitulairesManquants)): ?>
+    <div class="warning">
         <p>Attention : Les postes suivants n'ont pas de joueur titulaire sélectionné :</p>
         <ul>
             <?php foreach ($postesTitulairesManquants as $posteManquant): ?>
@@ -136,83 +282,71 @@ if (!empty($postesTitulairesManquants)): ?>
 <?php endif; ?>
 
 <?php if (!$matchEstPasse): ?>
-<!-- Bouton pour retirer tous les joueurs -->
-<form method="POST">
-    <input type="hidden" name="method" value="supprimer_tous">
-    <button type="submit">Retirer tous les joueurs</button>
-</form>
-<?php endif;?>
-<?php
-// Liste des postes titulaires
-foreach ($postes as $numPoste => $nomPoste): ?>
-    <form method="POST">
-        <table>
-            <thead>
-            <tr>
-                <th>Poste</th>
-                <th>Joueur sélectionné</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
+    <div class="form-container">
+        <form method="POST">
+            <input type="hidden" name="method" value="supprimer_tous">
+            <button type="submit">Retirer tous les joueurs</button>
+        </form>
+    </div>
+<?php endif; ?>
 
-            <tr>
-                <td><?= htmlspecialchars($nomPoste) ?></td>
-                <td>
-                    <?php if (isset($joueursParPoste[$numPoste])): ?>
-                        <?= htmlspecialchars($joueursParPoste[$numPoste]['prenom'] . ' ' . $joueursParPoste[$numPoste]['nom']) ?>
-                    <?php else: ?>
-                        <?php if (!$matchEstPasse): ?>
-                            <select name="id_joueur" required>
-                                <option value="">-- Sélectionnez un joueur --</option>
-                                <?php foreach ($joueursDisponibles as $joueur): ?>
-                                    <option value="<?= $joueur['id_joueur'] ?>">
-                                        <?= htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif;?>
-                    <?php endif; ?>
-                </td>
-                <td>
+<div class="match-list">
+    <?php foreach ($postes as $numPoste => $nomPoste): ?>
+        <div class="player-card">
+            <h3><?= htmlspecialchars($nomPoste) ?></h3>
+            <p>
+                <?php if (isset($joueursParPoste[$numPoste])): ?>
+                    <?= htmlspecialchars($joueursParPoste[$numPoste]['prenom'] . ' ' . $joueursParPoste[$numPoste]['nom']) ?>
+                <?php else: ?>
                     <?php if (!$matchEstPasse): ?>
-                            <?php if (!isset($joueursParPoste[$numPoste])): ?>
-                                <button type="submit" name="poste" value="<?= $numPoste ?>">Valider Titulaire</button>
-                                <input type="hidden" name="method" value="ajouterTitulaire">
-                            <?php else: ?>
-                                <form method="POST" style="display:inline;">
-                                    <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
-                                    <input type="hidden" name="method" value="supprimer">
-                                    <button type="submit" name="bouton">Retirer</button>
-                                </form>
-                            <?php endif; ?>
+                        <select name="id_joueur" required>
+                            <option value="">-- Sélectionnez un joueur --</option>
+                            <?php foreach ($joueursDisponibles as $joueur): ?>
+                                <option value="<?= $joueur['id_joueur'] ?>">
+                                    <?= htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     <?php endif;?>
-                    <?php if (isset($joueursParPoste[$numPoste])): ?>
-                        <!-- Si un joueur est présent dans ce poste, vérifier si la note existe -->
-                        <?php if ($matchEstPasse): ?>
-                            <?php
-                            // Vérifier si le joueur a déjà une note
-                            $noteExistante = isset($joueursParPoste[$numPoste]['note_joueur']) ? $joueursParPoste[$numPoste]['note_joueur'] : null;
-                            if ($noteExistante): ?>
-                                <p>Note : <?= htmlspecialchars($noteExistante) ?> / 5</p>
-                            <?php else: ?>
-                                <!-- Si la note n'existe pas, afficher un champ pour ajouter la note -->
-                                <form method="POST">
-                                    <label for="note">Note :</label>
-                                    <input type="number" name="note" min="1" max="5" required>
-                                    <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
-                                    <input type="hidden" name="method" value="ajouterNote">
-                                    <button type="submit">Ajouter la note</button>
-                                </form>
-                            <?php endif; ?>
+                <?php endif; ?>
+            </p>
+            <div class="form-container">
+                <?php if (!$matchEstPasse): ?>
+                    <?php if (!isset($joueursParPoste[$numPoste])): ?>
+                        <form method="POST">
+                            <input type="hidden" name="method" value="ajouterTitulaire">
+                            <input type="hidden" name="poste" value="<?= $numPoste ?>">
+                            <button type="submit" class="btn btn-warning">Valider Titulaire</button>
+                        </form>
+                    <?php else: ?>
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
+                            <input type="hidden" name="method" value="supprimer">
+                            <button type="submit" class="btn btn-danger">Retirer</button>
+                        </form>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if (isset($joueursParPoste[$numPoste])): ?>
+                    <?php if ($matchEstPasse): ?>
+                        <?php
+                        $noteExistante = isset($joueursParPoste[$numPoste]['note_joueur']) ? $joueursParPoste[$numPoste]['note_joueur'] : null;
+                        if ($noteExistante): ?>
+                            <p>Note : <?= htmlspecialchars($noteExistante) ?> / 5</p>
+                        <?php else: ?>
+                            <form method="POST">
+                                <label for="note">Note :</label>
+                                <input type="number" name="note" min="1" max="5" required>
+                                <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
+                                <input type="hidden" name="method" value="ajouterNote">
+                                <button type="submit" class="btn btn-warning">Ajouter la note</button>
+                            </form>
                         <?php endif; ?>
                     <?php endif; ?>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-<?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 <h2>Postes et sélection des joueurs remplaçants (optionnel)</h2>
 
