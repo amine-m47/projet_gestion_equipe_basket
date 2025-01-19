@@ -1,22 +1,17 @@
 <?php
 
-require_once 'models/StatsModel.php';
+class StatsController
+{
+    public function index()
+    {
+        // Inclure la bibliothèque
+        require_once __DIR__ . '/../lib/statistique_lib.php';
 
-class StatsController {
-    private $statsModel;
+        // Récupérer les statistiques
+        $statsEquipe = StatistiqueLib::getStatsEquipe();
+        $statsJoueurs = StatistiqueLib::getStatsJoueurs();
 
-    public function __construct($db) {
-        $this->statsModel = new StatsModel($db);
-    }
-
-    public function showStatsPage() {
-        // Récupérer les données depuis le modèle
-        $statsEquipe = $this->statsModel->getStatsEquipe();
-        $statsJoueurs = $this->statsModel->getStatsJoueurs();
-
-        // Charger la vue avec les données
-        require 'views/stats.php';
+        // Passer les données à la vue
+        require_once __DIR__ . '/../views/stats/index.php';
     }
 }
-
-?>
