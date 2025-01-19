@@ -6,4 +6,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Redirection vers la page des joueurs
 header('Location: ../views/joueurs/index.php');
+exit;
