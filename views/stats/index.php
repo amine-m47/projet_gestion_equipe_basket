@@ -7,10 +7,12 @@ require_once __DIR__ . '/../../controllers/StatsController.php';
 $controller = new StatsController($pdo);
 
 // Récupération des statistiques via le contrôleur
-$statsEquipe = null;
-$statsJoueurs = [];
-
+$statsEquipe = getEquipeStats($pdo);
+$statsJoueurs = getJoueurStats($pdo);
 $controller->index();
+        //var_dump($statsEquipe);
+        //var_dump($statsJoueurs);  
+
 ?>
 
 <h1>Statistiques de l'équipe</h1>
@@ -19,7 +21,7 @@ $controller->index();
 <table>
     <tr>
         <th>Total de matchs</th>
-        <td><?= isset($statsEquipe['total']) ? $statsEquipe['total'] : 0 ?></td>
+        <td><?=  $statsEquipe['total'] ?></td>
     </tr>
     <tr>
         <th>Matchs gagnés</th>
@@ -57,10 +59,10 @@ $controller->index();
             <th>Nom</th>
             <th>Statut</th>
             <th>Poste préféré</th>
-            <th>Titularisations</th>
-            <th>Remplacements</th>
-            <th>Évaluations</th>
-            <th>% Victoires</th>
+            <th>Nombre de Titularisations</th>
+            <th>Nombre de Remplacements</th>
+            <th>Moyenne des évaluations</th>
+            <th>Pourcentage de Victoires</th>
             <th>Sélections consécutives</th>
         </tr>
     </thead>
@@ -68,7 +70,7 @@ $controller->index();
         <?php if (!empty($statsJoueurs)): ?>
             <?php foreach ($statsJoueurs as $joueur): ?>
                 <tr>
-                    <td><?= htmlspecialchars($joueur['nom']) ?></td>
+                    <td><?= htmlspecialchars($joueur['nom_complet']) ?></td>
                     <td><?= htmlspecialchars($joueur['statut']) ?></td>
                     <td><?= htmlspecialchars($joueur['poste_prefere'] ?? 'Non spécifié') ?></td>
                     <td><?= $joueur['titularisations'] ?? 0 ?></td>

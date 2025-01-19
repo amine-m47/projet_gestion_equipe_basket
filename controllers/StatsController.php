@@ -16,9 +16,9 @@ class StatsController {
         $statsJoueurs = getJoueurStats($this->pdo);
     
         // Debug : Vérifiez les données récupérées
-       // var_dump($statsEquipe);
-        //var_dump($statsJoueurs);
-    
+        //var_dump($statsEquipe);
+        //var_dump($statsJoueurs);  
+
         // Charger la vue avec les données
         require_once __DIR__ . '/../views/stats/index.php';
     }
