@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../lib/participer_lib.php';
+require_once __DIR__ . '/../lib/Participer_lib.php';
 
 class ParticiperController {
     private $pdo;
@@ -8,35 +8,38 @@ class ParticiperController {
         $this->pdo = $pdo;
     }
 
+    // Afficher la page de la feuille de match
+    public function show($id_match) {
+        $joueursDisponibles = getJoueursDisponibles($this->pdo, $id_match);
+        // Récupérer la feuille de match pour ce match
+        $feuilleMatch = getParticipation($this->pdo, $id_match);
+
+        return ['joueursDisponibles' => $joueursDisponibles, 'feuilleMatch' => $feuilleMatch];
+    }
+
     // Ajouter un joueur à la feuille de match
-    public function ajouterParticipation($id_joueur, $id_match, $role_joueur, $titulaire) {
-        if (!isJoueurActif($this->pdo, $id_joueur)) {
-            throw new Exception("Le joueur n'est pas actif.");
-        }
-        ajouterParticipation($this->pdo, $id_joueur, $id_match, $role_joueur, $titulaire);
+    public function addJoueur($id_match, $id_joueur, $titulaire, $poste) {
+        return ajouterJoueurMatch($this->pdo, $id_match, $id_joueur, $titulaire, $poste);
     }
 
     // Modifier la participation d'un joueur
-    public function modifierParticipation($id_joueur, $id_match, $role_joueur, $titulaire) {
-        if (!isJoueurActif($this->pdo, $id_joueur)) {
-            throw new Exception("Le joueur n'est pas actif.");
-        }
-        modifierParticipation($this->pdo, $id_joueur, $id_match, $role_joueur, $titulaire);
+    public function modifyJoueur($id_match, $id_joueur, $titulaire, $poste) {
+        return modifierParticipation($this->pdo, $id_match, $id_joueur, $titulaire, $poste);
     }
 
-    // Retirer un joueur de la feuille de match
-    public function retirerJoueur($id_joueur, $id_match) {
-        retirerJoueur($this->pdo, $id_joueur, $id_match);
+    // Retirer un joueur d'une feuille de match
+    public function removeJoueur($id_match, $id_joueur) {
+        return retirerJoueur($this->pdo, $id_match, $id_joueur);
     }
 
-    // Récupérer les joueurs d'un match spécifique
-    public function getJoueursDeMatch($id_match) {
-        return getJoueursDeMatch($this->pdo, $id_match);
+    // Vérifier le nombre de joueurs sélectionnés
+    public function checkJoueurs($id_match, $nombre_requis) {
+        return verifierNombreJoueurs($this->pdo, $id_match, $nombre_requis);
     }
 
-    // Vérifier que le nombre de joueurs correspond à celui du sport choisi
-    public function verifierNombreJoueurs($joueursSelectionnes, $nombreJoueursRequis) {
-        return verifierNombreJoueursValide($joueursSelectionnes, $nombreJoueursRequis);
+    // Évaluer un joueur
+    public function evaluerJoueur($id_match, $id_joueur, $note) {
+        return evaluerJoueur($this->pdo, $id_match, $id_joueur, $note);
     }
 }
 ?>

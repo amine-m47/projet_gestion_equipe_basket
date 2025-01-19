@@ -67,5 +67,18 @@ class MatchController {
     public function getMatchsAVenir() {
         return getMatchsAVenir($this->pdo);
     }
+
+
+    public function getJoueursActifs() {
+        return $this->matchModel->getJoueursActifs();
+    }
+
+    public function getMatchDetails($matchId) {
+        return $this->matchModel->getMatchDetails($matchId);
+    }
+
+    public function ajouterParticipation($joueurId, $matchId, $poste, $titulaire) {
+        return $this->matchModel->ajouterParticipation($joueurId, $matchId, $poste, $titulaire);
+    }
 }
 ?>
