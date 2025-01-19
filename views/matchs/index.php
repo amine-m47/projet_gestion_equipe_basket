@@ -35,16 +35,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .match-card.upcoming {
-        border-left: 4px solid #007bff; /* bleu pour les matchs à venir */
+    .match-card.victory {
+        border-left: 4px solid #28a745; /* Vert pour victoire */
     }
 
-    .match-card.past {
-        border-left: 4px solid #28a745; /* vert pour les matchs passés */
+    .match-card.defeat {
+        border-left: 4px solid #dc3545; /* Rouge pour défaite */
+    }
+
+    .match-card.draw {
+        border-left: 4px solid #ffc107; /* Jaune pour match nul */
+    }
+
+    .match-card.upcoming {
+        border-left: 4px solid #007bff; /* Bleu pour match à venir */
     }
 
     .match-card.no-result {
-        border-left: 4px solid #6c757d; /* gris pour les matchs sans résultat */
+        border-left: 4px solid #007bff; /* Bleu aussi si résultat non défini */
     }
 
     .match-card h3 {
@@ -133,7 +141,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
             $isResultNotSet = is_null($match['resultat']);
             ?>
 
-            <div class="match-card <?php echo $isPastMatch ? 'past' : ($isResultNotSet ? 'no-result' : 'upcoming'); ?>">
+            <div class="match-card
+                <?php
+            if ($isPastMatch && !$isResultNotSet):
+                // Si le match est passé et a un résultat
+                if ($match['resultat'] == 1) {
+                    echo ' victory';
+                } elseif ($match['resultat'] == 0) {
+                    echo ' defeat';
+                } elseif ($match['resultat'] == 2) {
+                    echo ' draw';
+                }
+                elseif ($isResultNotSet || !$isPastMatch) {
+                    // Si le résultat n'est pas défini ou si le match est à venir
+                    echo ' upcoming';
+                }else{
+                echo ' no-result'; // Si aucun résultat n'est encore défini pour un match passé
+            }endif;
+            ?>
+            ">
                 <h3>Match contre <?= htmlspecialchars($match['equipe_adverse']) ?></h3>
                 <p><strong>Date et Heure :</strong> <?= htmlspecialchars($match['date_heure']) ?></p>
                 <p><strong>Lieu :</strong> <?= $match['domicile'] ? 'Domicile' : htmlspecialchars($match['lieu_rencontre']) ?></p>
