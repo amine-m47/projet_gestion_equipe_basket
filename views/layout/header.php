@@ -12,6 +12,7 @@
     <nav>
         <a href="../../views/joueurs/index.php">Joueurs</a>
         <a href="../../views/matchs/index.php">Matchs</a>
+        <a href="../../views/stats/index.php">Statistiques</a>
         <a href="../../public/logout.php">Déconnexion</a>
     </nav>
 </header>
