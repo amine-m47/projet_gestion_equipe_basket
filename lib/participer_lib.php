@@ -3,20 +3,45 @@
 // Récupérer les joueurs disponibles pour un match (actifs et non encore sélectionnés)
 function getJoueursDisponibles($pdo, $id_match) {
     $stmt = $pdo->prepare(
-        "SELECT j.id_joueur, j.prenom, j.nom, j.numero_licence_joueur
+        "SELECT j.id_joueur, j.nom, j.prenom
         FROM Joueur j
         WHERE lower(j.statut) = 'actif'
-        AND j.id_joueur NOT IN (SELECT id_joueur FROM Participer WHERE id_match = :id_match)"
+        AND j.id_joueur NOT IN (
+            SELECT p.id_joueur
+            FROM Participer p
+            WHERE p.id_match = :id_match
+        )"
     );
     $stmt->execute([':id_match' => $id_match]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
 // Ajouter un joueur à la feuille de match
-function ajouterJoueurMatch($pdo, $id_match, $id_joueur, $poste, $titulaire) {
-    $stmt = $pdo->prepare("INSERT INTO Participer (id_match, id_joueur, poste, titulaire) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$id_match, $id_joueur, $poste, $titulaire]);
+function ajouterJoueur($pdo,$id_match, $id_joueur, $poste, $titulaire) {
+    // Vérifier si ce joueur est déjà assigné à ce poste dans ce match
+    $query = "SELECT * FROM Participer WHERE id_match = :id_match AND id_joueur = :id_joueur";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([
+        ':id_match' => $id_match,
+        ':id_joueur' => $id_joueur,
+    ]);
+    if ($stmt->rowCount() > 0) {
+         // Si on ne remplace pas, on renvoie une erreur ou on fait rien
+                $_SESSION['error'] = "Le joueur est déjà assigné à ce poste.";
+                return;
+            }
+    // Ajouter le joueur à la feuille de match
+    $query = "INSERT INTO Participer (id_match, id_joueur, poste, titulaire) VALUES (:id_match, :id_joueur, :poste, :titulaire)";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([
+        ':id_match' => $id_match,
+        ':id_joueur' => $id_joueur,
+        ':poste' => $poste,
+        ':titulaire' => $titulaire,
+    ]);
 }
+
 
 // Modifier la participation d'un joueur (titulaire, poste)
 function modifierParticipation($pdo, $id_match, $id_joueur, $poste, $titulaire) {
@@ -59,6 +84,13 @@ function getParticipation($pdo, $id_match) {
     );
     $stmt->execute([':id_match' => $id_match]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Retourne toutes les participations sous forme de tableau associatif
+}
+
+// ParticiperController.php
+function retirerAllJoueurs($pdo, $id_match) {
+    // Supprimer tous les joueurs pour ce match
+    $query = $pdo->prepare("DELETE FROM participer WHERE id_match = :id_match");
+    $query->execute(['id_match' => $id_match]);
 }
 
 ?>

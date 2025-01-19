@@ -47,7 +47,6 @@ class MatchController {
             header("Location: index.php"); // Rediriger après la mise à jour
             exit();
         }
-        echo 'nn';
     }
 
     // Supprimer un match

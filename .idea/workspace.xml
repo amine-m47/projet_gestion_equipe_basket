@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d769dcd7-8e1a-40a6-a3f7-4899fca3113e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/views/feuilles/feuille_match.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/feuilles/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/MatchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/MatchController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/ParticiperController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/ParticiperController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/match_lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/match_lib.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/participer_lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/participer_lib.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/feuilles/match_feuille.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/feuilles/feuille_match.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/feuille_match.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/matchs/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +46,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\projet_gestion_equipe_basket\views\matchs" />
       <recent name="C:\xampp\htdocs\projet_gestion_equipe_basket\views\feuilles" />
       <recent name="C:\BUT\s3\projet_gestion_equipe_basket" />
       <recent name="C:\BUT\s3\projet_gestion_equipe_basket\config" />

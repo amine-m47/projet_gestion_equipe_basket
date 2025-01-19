@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
         exit();
     }
 }
-
 ?>
-<style>.match-list {
+<style>
+    .match-list {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
@@ -104,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
         background-color: #dc3545;
     }
 </style>
+
 <h1>Liste des matchs</h1>
 <a href="create.php" class="btn btn-primary">Ajouter un match</a>
 
@@ -134,15 +135,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
                         } elseif ($match['resultat'] == 2) {
                             echo '<span class="result draw">Match nul</span>';
                         }
-                        else{
-                        echo 'Match à venir';}
+                        else {
+                            echo 'Match à venir';
+                        }
                     endif;
                     ?>
                 </p>
 
                 <div class="match-actions">
                     <?php if (!$isPastMatch): ?>
+                        <!-- Bouton Feuille de match -->
+                        <a href="feuille_match.php?id_match=<?= $match['id_match'] ?>" class="btn btn-primary">Feuille de match</a>
+                        <!-- Bouton Modifier -->
                         <a href="edit.php?id=<?= $match['id_match'] ?>" class="btn btn-warning">Modifier</a>
+                        <!-- Bouton Supprimer -->
                         <form method="POST" style="display:inline;">
                             <input type="hidden" name="id_match" value="<?= $match['id_match'] ?>">
                             <input type="hidden" name="method" value="delete">
