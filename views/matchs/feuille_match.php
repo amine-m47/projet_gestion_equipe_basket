@@ -93,11 +93,18 @@ foreach ($feuilleMatch as $participation) {
 
 // Liste des postes (titulaires et remplaçants)
 $postes = [
-    1 => "Meneur (Point Guard)",
-    2 => "Arrière (Shooting Guard)",
-    3 => "Ailier (Small Forward)",
-    4 => "Ailier fort (Power Forward)",
-    5 => "Pivot (Center)"
+    1 => "Meneur",
+    2 => "Arrière",
+    3 => "Ailier",
+    4 => "Ailier fort",
+    5 => "Pivot"
+];
+$postesRemplacants = [
+    6 => "Meneur",
+    7 => "Arrière",
+    8 => "Ailier",
+    9 => "Ailier fort",
+    10 => "Pivot"
 ];
 
 // Vérifier si un poste titulaire est manquant
@@ -181,10 +188,15 @@ foreach ($postes as $numPoste => $nomPoste): ?>
                             <?php endif; ?>
                     <?php endif;?>
                     <?php if (isset($joueursParPoste[$numPoste])): ?>
-                        <!-- Si un joueur est présent dans ce poste, afficher la possibilité d'ajouter une note -->
+                        <!-- Si un joueur est présent dans ce poste, vérifier si la note existe -->
                         <?php if ($matchEstPasse): ?>
-                            <!-- Vérifier si le joueur existant est un titulaire ou un remplaçant -->
-                            <?php if (!empty($joueursParPoste[$numPoste]['id_joueur'])): ?>
+                            <?php
+                            // Vérifier si le joueur a déjà une note
+                            $noteExistante = isset($joueursParPoste[$numPoste]['note_joueur']) ? $joueursParPoste[$numPoste]['note_joueur'] : null;
+                            if ($noteExistante): ?>
+                                <p>Note : <?= htmlspecialchars($noteExistante) ?> / 5</p>
+                            <?php else: ?>
+                                <!-- Si la note n'existe pas, afficher un champ pour ajouter la note -->
                                 <form method="POST">
                                     <label for="note">Note :</label>
                                     <input type="number" name="note" min="1" max="5" required>
@@ -206,7 +218,7 @@ foreach ($postes as $numPoste => $nomPoste): ?>
 
 <?php
 // Liste des postes remplaçants
-foreach ($postes as $numPoste => $nomPoste): ?>
+foreach ($postesRemplacants as $numPoste => $nomPoste): ?>
     <form method="POST">
         <table>
             <thead>
@@ -250,21 +262,27 @@ foreach ($postes as $numPoste => $nomPoste): ?>
                         </form>
                     <?php endif; ?>
                 <?php endif;?>
-                <?php if (isset($joueursParPoste[$numPoste])): ?>
-                    <!-- Si un joueur est présent dans ce poste, afficher la possibilité d'ajouter une note -->
-                    <?php if ($matchEstPasse): ?>
-                        <!-- Vérifier si le joueur existant est un titulaire ou un remplaçant -->
-                        <?php if (!empty($joueur['prenom'])): ?>
-                            <form method="POST">
-                                <label for="note">Note :</label>
-                                <input type="number" name="note" min="1" max="5" required>
-                                <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
-                                <input type="hidden" name="method" value="ajouterNote">
-                                <button type="submit">Ajouter la note</button>
-                            </form>
+
+                    <?php if (isset($joueursParPoste[$numPoste])): ?>
+                        <!-- Si un joueur est présent dans ce poste, vérifier si la note existe -->
+                        <?php if ($matchEstPasse): ?>
+                            <?php
+                            // Vérifier si le joueur a déjà une note
+                            $noteExistante = isset($joueursParPoste[$numPoste]['note_joueur']) ? $joueursParPoste[$numPoste]['note_joueur'] : null;
+                            if ($noteExistante): ?>
+                                <p>Note : <?= htmlspecialchars($noteExistante) ?> / 5</p>
+                            <?php else: ?>
+                                <!-- Si la note n'existe pas, afficher un champ pour ajouter la note -->
+                                <form method="POST">
+                                    <label for="note">Note :</label>
+                                    <input type="number" name="note" min="1" max="5" required>
+                                    <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
+                                    <input type="hidden" name="method" value="ajouterNote">
+                                    <button type="submit">Ajouter la note</button>
+                                </form>
+                            <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>
-                <?php endif; ?>
 
                 </td>
             </tr>
