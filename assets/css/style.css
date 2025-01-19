@@ -113,6 +113,21 @@ button:focus {
     outline: 2px solid #555;
     outline-offset: 2px;
 }
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* Container de la page de connexion */
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
 
 /* Réactivité */
 @media (max-width: 600px) {
