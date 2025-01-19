@@ -53,7 +53,17 @@ function joueurExiste($pdo, $id_joueur) {
     return $stmt->fetchColumn() > 0;
 }
 function getJoueursActifs($pdo) {
-    $stmt = $pdo->prepare('SELECT * FROM Joueur WHERE statut = "actif"');
+    $stmt = $pdo->prepare('SELECT * FROM Joueur WHERE lower(statut) = "actif"');
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+// Fonction pour vérifier si un joueur a une participation
+function participe($pdo, $id_joueur) {
+    // Préparer la requête SQL pour vérifier les participations dans la table Participer
+    $query = $pdo->prepare("SELECT COUNT(*) FROM Participer WHERE id_joueur = :id_joueur");
+    $query->execute(['id_joueur' => $id_joueur]);
+
+    // Retourner true si le joueur a une participation, sinon false
+    return $query->fetchColumn() > 0;
+}
+?>

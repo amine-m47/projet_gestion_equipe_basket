@@ -114,11 +114,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
                 <div class="player-actions">
                     <a href="note.php?id=<?= $joueur['id_joueur'] ?>" class="btn btn-info">Note</a>
                     <a href="edit.php?id=<?= $joueur['id_joueur'] ?>" class="btn btn-primary">Modifier</a>
+                    <?php
+                    $participe = $controller->hasParticipation($joueur['id_joueur']);
+                    if ($participe): ?>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="id_joueur" value="<?= $joueur['id_joueur'] ?>">
                         <input type="hidden" name="method" value="delete">
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">Supprimer</button>
                     </form>
+                    <?php endif;?>
                 </div>
             </div>
         <?php endforeach; ?>

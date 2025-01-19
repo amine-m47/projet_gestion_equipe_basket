@@ -75,5 +75,8 @@ class JoueurController {
         return getJoueursActifs($this->pdo);
     }
 
+    public function hasParticipation($id_joueur) {
+        return participe($this->pdo, $id_joueur);
+    }
 }
 ?>
