@@ -42,9 +42,17 @@ class ParticiperController {
     }
 
     // Évaluer un joueur
-    public function evaluerJoueur($id_match, $id_joueur, $note) {
-        evaluerJoueur($this->pdo, $id_match, $id_joueur, $note);
+    public function addNote($id_joueur, $id_match, $note) {
+        global $pdo;
+
+        // Vérification de la validité de la note
+        if ($note < 1 || $note > 5) {
+            throw new Exception("La note doit être entre 1 et 5.");
+        }
+
+        ajouterNote($this->pdo, $id_joueur, $id_match, $note);
     }
+
 
     public function removeAllJoueurs($id_match) {
         retirerAllJoueurs($this->pdo, $id_match);

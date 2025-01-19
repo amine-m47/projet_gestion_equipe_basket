@@ -64,7 +64,7 @@ function verifierNombreJoueurs($pdo, $id_match, $nombre_requis) {
 }
 
 // Évaluer un joueur dans un match joué
-function evaluerJoueur($pdo, $id_match, $id_joueur, $note) {
+function ajouterNote($pdo, $id_joueur,$id_match,  $note) {
     $stmt = $pdo->prepare("UPDATE Participer SET note_joueur = :note WHERE id_match = :id_match AND id_joueur = :id_joueur");
     $stmt->execute([
         ':id_match' => $id_match,

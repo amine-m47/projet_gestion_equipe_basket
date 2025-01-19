@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d769dcd7-8e1a-40a6-a3f7-4899fca3113e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/MatchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/MatchController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/ParticiperController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/ParticiperController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/participer_lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/participer_lib.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/feuilles/feuille_match.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/feuille_match.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/matchs/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/matchs/feuille_match.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/matchs/feuille_match.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,5 +81,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/views/matchs/feuille_match.php</url>
+          <line>156</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
