@@ -33,7 +33,7 @@ main {
     margin: 2rem auto;
     max-width: 800px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px
+    border-radius: 8px;
 }
 
 footer {
@@ -44,10 +44,12 @@ footer {
     margin-top: 2rem;
 }
 
+/* Styles spécifiques aux tableaux */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 2rem;
+    font-size: 0.9rem;
 }
 
 table th, table td {
@@ -57,9 +59,38 @@ table th, table td {
 }
 
 table th {
+    background-color: #333;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
     background-color: #f4f4f4;
 }
 
+table tr:hover {
+    background-color: #e9e9e9;
+}
+
+table td {
+    text-align: center; /* Centrer les données numériques */
+}
+
+/* Sections et titres */
+section {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+section h2 {
+    border-left: 4px solid #333;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Boutons */
 button, input, select {
     padding: 0.5rem;
     margin: 0.5rem 0;
@@ -71,8 +102,31 @@ button {
     background-color: #333;
     color: #fff;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #555;
+}
+
+button:focus {
+    outline: 2px solid #555;
+    outline-offset: 2px;
+}
+
+/* Réactivité */
+@media (max-width: 600px) {
+    main {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    table th, table td {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    section h2 {
+        font-size: 1.2rem;
+    }
 }
