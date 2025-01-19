@@ -117,6 +117,7 @@ foreach ($postes as $numPoste => $nomPoste) {
 
 ?>
 <style>
+
     /* Style général */
     body {
         font-family: 'Arial', sans-serif;
@@ -126,7 +127,7 @@ foreach ($postes as $numPoste => $nomPoste) {
         padding: 0;
     }
 
-    h1 {
+    .titre {
         text-align: center;
         color: #007bff;
         font-size: 36px;
@@ -136,9 +137,9 @@ foreach ($postes as $numPoste => $nomPoste) {
     h2 {
         color: #333;
         font-size: 24px;
-        text-align: center;
         margin-top: 5px;
     }
+
 
     .match-list {
         display: flex;
@@ -216,6 +217,11 @@ foreach ($postes as $numPoste => $nomPoste) {
     .btn-info {
         background-color: #28a745;
     }
+    .warning {
+        color: red;
+        font-weight: bold;
+    }
+
 
     .btn-info:hover {
         background-color: #218838;
@@ -264,22 +270,32 @@ foreach ($postes as $numPoste => $nomPoste) {
     .form-container button:hover {
         background-color: #0056b3;
     }
+    /* Pour les titulaires */
+    .titulaire {
+        background-color: #d6dddd;  /* Gris clair pour les titulaires */
+        color: white;
+    }
+
+    /* Pour les remplaçants */
+    .remplacant {
+        background-color: #a3b8e4;  /* Vert pâle pour les remplaçants */
+        color: black;
+    }
+
+
+
 </style>
 
-<h1>Feuille de Match</h1>
+<h1 class="titre">Feuille de Match</h1>
 
 <h2>Postes et sélection des Joueurs</h2>
 
 <?php if (!empty($postesTitulairesManquants)): ?>
     <div class="warning">
-        <p>Attention : Les postes suivants n'ont pas de joueur titulaire sélectionné :</p>
-        <ul>
-            <?php foreach ($postesTitulairesManquants as $posteManquant): ?>
-                <li><?= htmlspecialchars($posteManquant) ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <p>Attention : Les postes suivants n'ont pas de joueur titulaire sélectionné : <?php echo implode(", ", $postesTitulairesManquants); ?> </p>
     </div>
 <?php endif; ?>
+
 
 <?php if (!$matchEstPasse): ?>
     <div class="form-container">
@@ -292,7 +308,7 @@ foreach ($postes as $numPoste => $nomPoste) {
 
 <div class="match-list">
     <?php foreach ($postes as $numPoste => $nomPoste): ?>
-        <div class="player-card">
+        <div class="titulaire player-card">
             <h3><?= htmlspecialchars($nomPoste) ?></h3>
             <p>
                 <?php if (isset($joueursParPoste[$numPoste])): ?>
@@ -348,25 +364,18 @@ foreach ($postes as $numPoste => $nomPoste) {
     <?php endforeach; ?>
 </div>
 
+
 <h2>Postes et sélection des joueurs remplaçants (optionnel)</h2>
+<div class="match-list">
 
 <?php
 // Liste des postes remplaçants
 foreach ($postesRemplacants as $numPoste => $nomPoste): ?>
     <form method="POST">
-        <table>
-            <thead>
-            <tr>
-                <th>Poste</th>
-                <th>Joueur sélectionné</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            <tr>
-                <td><?= htmlspecialchars($nomPoste) ?></td>
-                <td>
+        <div class="poste-remplaçant">
+            <div class="remplacant player-card">
+                <h3><?= htmlspecialchars($nomPoste) ?></h3>
+                <div class="joueur-selectionne">
                     <?php if (isset($joueursParPoste[$numPoste]) && $joueursParPoste[$numPoste]['titulaire'] === 0): ?>
                         <?= htmlspecialchars($joueursParPoste[$numPoste]['prenom'] . ' ' . $joueursParPoste[$numPoste]['nom']) ?>
                     <?php else: ?>
@@ -379,23 +388,22 @@ foreach ($postesRemplacants as $numPoste => $nomPoste): ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                        <?php endif;?>
-                    <?php endif;?>
-                </td>
-                <td>
-                <?php if (!$matchEstPasse): ?>
-
-                    <?php if (!isset($joueursParPoste[$numPoste]) || $joueursParPoste[$numPoste]['titulaire'] === 1): ?>
-                        <input type="hidden" name="method" value="ajouterRemplacant">
-                        <button type="submit" name="poste" value="<?= $numPoste ?>">Valider Remplaçant</button>
-                    <?php else: ?>
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
-                            <input type="hidden" name="method" value="supprimer">
-                            <button type="submit" name="bouton">Retirer</button>
-                        </form>
+                        <?php endif; ?>
                     <?php endif; ?>
-                <?php endif;?>
+                </div>
+                <div class="player-actions">
+                    <?php if (!$matchEstPasse): ?>
+                        <?php if (!isset($joueursParPoste[$numPoste]) || $joueursParPoste[$numPoste]['titulaire'] === 1): ?>
+                            <input type="hidden" name="method" value="ajouterRemplacant">
+                            <button type="submit" name="poste" value="<?= $numPoste ?>" class="btn btn-primary">Valider Remplaçant</button>
+                        <?php else: ?>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
+                                <input type="hidden" name="method" value="supprimer">
+                                <button type="submit" name="bouton" class="btn btn-danger">Retirer</button>
+                            </form>
+                        <?php endif; ?>
+                    <?php endif; ?>
 
                     <?php if (isset($joueursParPoste[$numPoste])): ?>
                         <!-- Si un joueur est présent dans ce poste, vérifier si la note existe -->
@@ -412,17 +420,16 @@ foreach ($postesRemplacants as $numPoste => $nomPoste): ?>
                                     <input type="number" name="note" min="1" max="5" required>
                                     <input type="hidden" name="id_joueur" value="<?= $joueursParPoste[$numPoste]['id_joueur'] ?>">
                                     <input type="hidden" name="method" value="ajouterNote">
-                                    <button type="submit">Ajouter la note</button>
+                                    <button type="submit" class="btn btn-info">Ajouter la note</button>
                                 </form>
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </form>
 <?php endforeach; ?>
+</div>
 
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

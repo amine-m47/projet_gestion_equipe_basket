@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
         flex-wrap: wrap;
         gap: 20px;
         justify-content: space-around;
+        margin-top : 30px
     }
 
     .match-card {
@@ -74,11 +75,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
     }
 
     .match-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Ajoute de l'espace entre les boutons */
+        justify-content: flex-start;
         margin-top: 10px;
     }
 
     .match-actions a, .match-actions button {
-        margin-right: 10px;
+        margin: 5px; /* Ajoute une marge autour des boutons */
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+    }
+
+    a.btn {
+        display: inline-block; /* Empêche les boutons de prendre toute la largeur */
+        width: auto; /* Taille automatique basée sur le contenu */
+        text-align: center; /* Centre le texte à l'intérieur */
     }
 
     .btn {
@@ -143,9 +158,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['
                 </p>
 
                 <div class="match-actions">
+                    <!-- Bouton Feuille de match -->
+                    <a href="feuille_match.php?id_match=<?= $match['id_match'] ?>" class="btn btn-primary">Feuille de match</a>
                     <?php if (!$isPastMatch): ?>
-                        <!-- Bouton Feuille de match -->
-                        <a href="feuille_match.php?id_match=<?= $match['id_match'] ?>" class="btn btn-primary">Feuille de match</a>
                         <!-- Bouton Modifier -->
                         <a href="edit.php?id=<?= $match['id_match'] ?>" class="btn btn-warning">Modifier</a>
                         <!-- Bouton Supprimer -->

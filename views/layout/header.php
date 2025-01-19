@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-    <h1>Gestion Équipe Basket</h1>
+    <h1 class="titre-principal">Gestion Équipe Basket</h1>
     <nav>
         <a href="../../views/joueurs/index.php">Joueurs</a>
         <a href="../../views/matchs/index.php">Matchs</a>
