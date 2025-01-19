@@ -15,6 +15,19 @@ $controller->index();
 
 ?>
 
+<style>
+main {
+    padding: 2rem;
+    background: #f9f9f9;
+    margin: 2rem auto;
+    max-width: 1000px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px
+}
+</style>
+
+
+
 <h1>Statistiques de l'équipe</h1>
 
 <h2>Statistiques globales</h2>
